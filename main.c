@@ -28,6 +28,7 @@ t_color ray_color(t_ray r, t_list *world, int depth)
 		return vec3d(0, 0, 0);
 	if (update(world, r, 0.001, DBL_MAX, &rec))
 	{
+		
 		return difshader(rec, world, depth);
 	}
 	t_vec3d unit_dir;
@@ -105,7 +106,7 @@ void ft_render()
 		for (int j = 0; j < wn.sc.width; ++j)
 		{
 			t_vec3d cl = vec3d(0, 0, 0);
-			for (size_t k = 0; k < 500; ++k)
+			for (size_t k = 0; k < wn.samples_per_pixel; ++k)
 			{
 				u = (double)((double)j + random_double()) / (wn.sc.width - 1);
 				v = (double)((double)i + random_double()) / (wn.sc.height - 1);
@@ -113,13 +114,12 @@ void ft_render()
 				res = ray_color(r, wn.world, wn.sc.depth);
 				cl = vec_plus(cl, res);
 			}
-			write_color(cl, 500, j, wn.sc.height - i - 1);
+			write_color(cl, wn.samples_per_pixel, j, wn.sc.height - i - 1);
 		}
 
 		i++;
 	}
 }
-
 
 int run(void *arg)
 {
@@ -146,10 +146,11 @@ int main(void)
 	t_vec3d res;
 
 	wn.sc.a_ratio = 16.0 / 9.0;
-	wn.sc.width = 1080;
+	wn.sc.width = 400;
 	wn.sc.height = (int)(wn.sc.width / wn.sc.a_ratio);
 	wn.sc.depth = 50;
 	wn.cam = s_cam(2.0, 1.0, wn.sc);
+	wn.samples_per_pixel = 100;
 
 	wn.mlx = mlx_init();
 	wn.win = mlx_new_window(wn.mlx, wn.sc.width, wn.sc.height, "my");

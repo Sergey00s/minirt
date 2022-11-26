@@ -8,6 +8,7 @@ typedef struct s_window
 {
 	void *mlx;
 	void *win;
+	int samples_per_pixel;
 	t_screen sc;
 	t_list	*world;
 	t_cam	cam;
