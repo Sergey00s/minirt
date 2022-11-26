@@ -66,8 +66,6 @@ t_list *world_init()
 	return lst;
 }
 
-
-
 void first_render()
 {
 	double v;
@@ -146,7 +144,7 @@ int main(void)
 	t_vec3d res;
 
 	wn.sc.a_ratio = 16.0 / 9.0;
-	wn.sc.width = 400;
+	wn.sc.width = 800;
 	wn.sc.height = (int)(wn.sc.width / wn.sc.a_ratio);
 	wn.sc.depth = 50;
 	wn.cam = s_cam(2.0, 1.0, wn.sc);

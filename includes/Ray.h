@@ -3,6 +3,7 @@
 
 # define PI 3.14159
 # define IMAX 2147483647
+# define EPSILON 1e-4 
 
 # include <unistd.h>
 # include <stdio.h>

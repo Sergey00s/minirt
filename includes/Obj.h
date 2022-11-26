@@ -6,7 +6,8 @@
 typedef struct  s_plane
 {
     t_vec3d origin;
-    double rad;
+    t_vec3d normal;
+    double size;
 }               t_plane;
 
 typedef struct  s_cyl
@@ -30,5 +31,5 @@ typedef struct  s_obj
 }               t_obj;
 
 t_obj  *sph(t_vec3d origin, double rad);
-
+t_obj *pln(t_vec3d origin, t_vec3d normal);
 #endif

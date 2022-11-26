@@ -133,3 +133,15 @@ t_vec3d unit_vector(t_vec3d v)
 	return rtn;
 }
 
+double	distance(t_vec3d p1, t_vec3d p2)
+{
+	return (sqrt(pow(p2.x - p1.x, 2) + pow(p2.y - p1.y, 2) + pow(p2.z - p1.z, 2)));
+}
+
+t_vec3d	normalize2(t_vec3d vect)
+{
+	double	length;
+
+	length = distance(vec3d(0,0,0), vect);
+	return (vec3d(vect.x / length, vect.y / length, vect.z / length));
+}

@@ -23,6 +23,7 @@ int	update(t_list *lst, t_ray r, double min, double max, t_hit *rec)
 				*rec = tempr;
 			}
 		}
+		
 		lst = lst->next;
 	}
 	return hit;

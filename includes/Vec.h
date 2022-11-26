@@ -25,5 +25,7 @@ double  normalize(t_vec3d v1);
 t_vec3d minus(t_vec3d self);
 t_vec3d rand_unit_vec();
 t_vec3d random_in_hemisphere(t_vec3d normal);
+double	distance(t_vec3d p1, t_vec3d p2);
+t_vec3d	normalize2(t_vec3d vect);
 
 #endif
