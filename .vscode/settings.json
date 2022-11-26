@@ -1,0 +1,9 @@
+{
+	"C_Cpp.errorSquiggles": "Disabled",
+	"files.associations": {
+		"scene.h": "c",
+		"vec.h": "c",
+		"cam.h": "c",
+		"obj.h": "c"
+	}
+}
