@@ -4,6 +4,7 @@
 		"scene.h": "c",
 		"vec.h": "c",
 		"cam.h": "c",
-		"obj.h": "c"
+		"obj.h": "c",
+		"window.h": "c"
 	}
 }

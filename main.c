@@ -6,15 +6,30 @@
 
 t_window wn;
 
+
+int tolight(t_hit rec, t_light lt)
+{
+
+}
+
+
 t_vec3d difshader(t_hit rec, t_list *world, int depth)
 {
 	t_ray r;
 	t_vec3d target;
 
-	// target = vec_plus(rand_unit_vec(), rec.normal);
-	target = vec_plus(rec.p, random_in_hemisphere(rec.normal));
-	r = ray(rec.p, vec_plus(target, minus(rec.p)));
+	
+	// if (tolight(rec, wn.light))
+	// {
+	// 	printf("hitt\n");
+	// }else
+	// 	return (vec3d(5,25,125));
+	
+	r = ray(rec.p, vec3d(random_double(), random_double(), random_double()));
 	return (vec_multiply_by_value(ray_color(r, world, depth - 1), 0.5));
+	// target = vec_plus(rand_unit_vec(), rec.normal);
+	// target = vec_plus(rec.p, random_in_hemisphere(rec.normal));
+	// r = ray(rec.p, vec_plus(target, minus(rec.p)));
 }
 
 t_color ray_color(t_ray r, t_list *world, int depth)
@@ -66,7 +81,9 @@ t_list *world_init()
 	return lst;
 }
 
-void first_render()
+
+
+int ft_render()
 {
 	double v;
 	double u;
@@ -74,32 +91,6 @@ void first_render()
 	t_vec3d res;
 
 	for (int i = 0; i < wn.sc.height; ++i)
-	{
-		for (int j = 0; j < wn.sc.width; ++j)
-		{
-			t_vec3d cl = vec3d(0, 0, 0);
-			for (size_t k = 0; k < 1; ++k)
-			{
-				u = (double)((double)j + random_double()) / (wn.sc.width - 1);
-				v = (double)((double)i + random_double()) / (wn.sc.height - 1);
-				r = ray(wn.cam.origin, direction(wn.cam, u, v));
-				res = ray_color(r, wn.world, wn.sc.depth);
-				cl = vec_plus(cl, res);
-			}
-			write_color(cl, 1, j, wn.sc.height - i - 1);
-		}
-	}
-}
-
-void ft_render()
-{
-	double v;
-	double u;
-	t_ray r;
-	t_vec3d res;
-	static int i;
-
-	if (i < wn.sc.height)
 	{
 		for (int j = 0; j < wn.sc.width; ++j)
 		{
@@ -114,48 +105,44 @@ void ft_render()
 			}
 			write_color(cl, wn.samples_per_pixel, j, wn.sc.height - i - 1);
 		}
-
-		i++;
-	}
-}
-
-int run(void *arg)
-{
-	static int first = 1;
-	if (first)
-	{
-		first = 0;
-		first_render();
-	}
-	else
-	{
-		ft_render();
-	}
+		mlx_do_sync(wn.mlx);
+	}	
 	return 1;
 }
 
-
-int main(void)
+int key_hook(int keycode, t_window *vars)
 {
-	double v;
-	double u;
-	t_vec3d test;
-	t_ray r;
-	t_vec3d res;
+	if (keycode == 15)
+	{
+		ft_render();
+	}
+	if (keycode == 53)
+	{
+		exit(1);
+	}
+	
+	return 1;
+}
 
-	wn.sc.a_ratio = 16.0 / 9.0;
+static void cam_init()
+{
+	wn.sc.a_ratio = 4.0 / 3.0;
 	wn.sc.width = 800;
 	wn.sc.height = (int)(wn.sc.width / wn.sc.a_ratio);
 	wn.sc.depth = 50;
 	wn.cam = s_cam(2.0, 1.0, wn.sc);
 	wn.samples_per_pixel = 100;
+	printf("height = %d, width = %d\ncam_pos = (%f, %f, %f)\n", wn.sc.height, wn.sc.width, wn.cam.origin.x, wn.cam.origin.y, wn.cam.origin.z);
+}
 
+int main(void)
+{
+	cam_init();
 	wn.mlx = mlx_init();
-	wn.win = mlx_new_window(wn.mlx, wn.sc.width, wn.sc.height, "my");
-
+	wn.win = mlx_new_window(wn.mlx, wn.sc.width, wn.sc.height, "test");
 	wn.world = world_init();
 	ft_lstadd_back(&wn.world, ft_lstnew(sph(vec3d(0, -100.5, -1), 100)));
-	mlx_loop_hook(wn.mlx, &run, NULL);
+	mlx_key_hook(wn.win, key_hook, NULL);
 	mlx_loop(wn.mlx);
 	return 0;
 }

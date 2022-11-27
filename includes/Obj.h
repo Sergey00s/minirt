@@ -22,6 +22,13 @@ typedef struct  s_sph
     double rad;
 }               t_sph;
 
+typedef struct s_light
+{
+    t_vec3d origin;
+    int     bright;
+}               t_light;
+
+
 typedef struct  s_obj
 {
     t_plane pln;
