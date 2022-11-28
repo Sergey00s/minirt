@@ -63,7 +63,7 @@ static t_vec3d direction(t_cam cam, double u, double v)
 	res = vec_plus(v1, res);
 	res = vec_plus(cam.lower_left_corner, res);
 	res = vec_plus(cam.origin, res);
-
+	res = normalize2(res);
 	return res;
 }
 
@@ -125,7 +125,7 @@ static void cam_init()
 {
 	wn.cam.origin = vec3d(0, 2, 5);
 	wn.sc.a_ratio = 16.0 / 9.0;
-	wn.sc.width = 800;
+	wn.sc.width = 800 * 2.5;
 	wn.sc.height = (int)(wn.sc.width / wn.sc.a_ratio);
 	wn.sc.depth = 50;
 	wn.cam = s_cam(2.0, 1.0, wn.sc);

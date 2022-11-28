@@ -48,12 +48,12 @@ int	update(t_list *lst, t_ray r, double min, double max, t_hit *rec)
 		if (!tocall(r, tris[tris_length], &tmp_t, &tmp_pos))
 			continue;
 		//printf("oldu len\n");
-		tmp_distance = lenght_squared(vec_plus(tmp_pos, minus(r.center)));
+		tmp_distance = -tmp_t;
 		if (min_distance_sqr > tmp_distance)
 		{
 			found_index = tris_length;
 			min_distance_sqr = tmp_distance;
-			rec->p = vec_multiply_by_value(vec3d(1,1,1), sqrt(tmp_distance) / 10);
+			rec->p = vec_multiply_by_value(vec3d(1,1,1), ((int)(tmp_distance * 600) % 100) / 100.0);
 			t = tmp_t;
 		}
 	}
