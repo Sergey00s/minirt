@@ -10,6 +10,20 @@ typedef struct  s_plane
     double size;
 }               t_plane;
 
+typedef struct s_tris
+{
+    t_vec3d a;
+    t_vec3d b;
+    t_vec3d c;
+} t_tris;
+
+typedef struct s_mesh
+{
+    char *name;
+    t_vec3d color;
+    t_tris *tris;
+} t_mesh;
+
 typedef struct  s_cyl
 {
     t_vec3d origin;

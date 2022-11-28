@@ -43,7 +43,6 @@ t_color ray_color(t_ray r, t_list *world, int depth)
 		return vec3d(0, 0, 0);
 	if (update(world, r, 0.001, DBL_MAX, &rec))
 	{
-		
 		return difshader(rec, world, depth);
 	}
 	t_vec3d unit_dir;
@@ -100,7 +99,7 @@ int ft_render()
 				u = (double)((double)j + random_double()) / (wn.sc.width - 1);
 				v = (double)((double)i + random_double()) / (wn.sc.height - 1);
 				r = ray(wn.cam.origin, direction(wn.cam, u, v));
-				res = ray_color(r, wn.world, wn.sc.depth);
+				//res = //ray_color(r, wn.world, wn.sc.depth);
 				cl = vec_plus(cl, res);
 			}
 			write_color(cl, wn.samples_per_pixel, j, wn.sc.height - i - 1);
@@ -115,6 +114,7 @@ int key_hook(int keycode, t_window *vars)
 	if (keycode == 15)
 	{
 		ft_render();
+
 	}
 	if (keycode == 53)
 	{
