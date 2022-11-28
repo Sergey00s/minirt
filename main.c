@@ -39,7 +39,8 @@ t_color ray_color(t_ray r, t_list *world, int depth)
 		return vec3d(0, 0, 0);
 	if (update(world, r, 0.001, DBL_MAX, &rec))
 	{
-		return rec.p;
+		t_vec3d light_dir = normalize(vec_sub(wn.lamp, rec.p));
+		return vec_multiply_by_value(vec3d(1,1,1), dot_product(rec.normal, light_dir));
 		return difshader(rec, world, depth);
 	}
 	t_vec3d unit_dir;
@@ -63,7 +64,7 @@ static t_vec3d direction(t_cam cam, double u, double v)
 	res = vec_plus(v1, res);
 	res = vec_plus(cam.lower_left_corner, res);
 	res = vec_plus(cam.origin, res);
-	res = normalize2(res);
+	res = normalize(res);
 	return res;
 }
 
@@ -125,7 +126,7 @@ static void cam_init()
 {
 	wn.cam.origin = vec3d(0, 2, 5);
 	wn.sc.a_ratio = 16.0 / 9.0;
-	wn.sc.width = 800 * 2.5;
+	wn.sc.width = 800;
 	wn.sc.height = (int)(wn.sc.width / wn.sc.a_ratio);
 	wn.sc.depth = 50;
 	wn.cam = s_cam(2.0, 1.0, wn.sc);

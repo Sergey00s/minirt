@@ -97,7 +97,7 @@ t_vec3d vec_multiply_by_value(t_vec3d v1, double t)
 	return rtn;
 }
 
-double normalize(t_vec3d v1)
+double vec_len(t_vec3d v1)
 {
     int sum;
 	sum = (v1.x * v1.x) + (v1.y * v1.y) + (v1.z * v1.z);
@@ -138,7 +138,7 @@ double	distance(t_vec3d p1, t_vec3d p2)
 	return (sqrt(pow(p2.x - p1.x, 2) + pow(p2.y - p1.y, 2) + pow(p2.z - p1.z, 2)));
 }
 
-t_vec3d	normalize2(t_vec3d vect)
+t_vec3d	normalize(t_vec3d vect)
 {
 	double	length;
 

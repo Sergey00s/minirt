@@ -12,7 +12,7 @@ int	intersect_plane(t_plane plane, t_ray ray, double min, double max, t_hit *imp
 		x = dot_product(vec_plus(plane.origin, minus(ray.center)), plane.normal) / denom;
 		if (x > EPSILON && x < max)
 		{
-			impact->normal = normalize2(plane.normal);
+			impact->normal = normalize(plane.normal);
 			impact->p = vec_plus(ray.center, vec_multiply_by_value(ray.direction, x));
 			impact->p = vec_plus(impact->p, vec_multiply_by_value(impact->normal, EPSILON));
 			return (1);

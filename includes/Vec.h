@@ -23,11 +23,12 @@ t_vec3d vec_plus(t_vec3d v1, t_vec3d v2);
 double lenght_squared(t_vec3d self);
 double lenght(t_vec3d self);
 t_vec3d unit_vector(t_vec3d v);
-double  normalize(t_vec3d v1);
+double vec_len(t_vec3d v1);
 t_vec3d minus(t_vec3d self);
 t_vec3d rand_unit_vec();
 t_vec3d random_in_hemisphere(t_vec3d normal);
 double	distance(t_vec3d p1, t_vec3d p2);
-t_vec3d	normalize2(t_vec3d vect);
+t_vec3d	normalize(t_vec3d vect);
+t_vec3d cross_product(t_vec3d v1, t_vec3d v2);
 
 #endif
