@@ -19,6 +19,7 @@ typedef struct s_hit
 	int shader;
 }				t_hit;
 
+int tocall(t_ray ray, t_tris tris, double *value, t_vec3d *pos);
 t_color ray_color(t_ray r, t_list *world, int depth);
 t_vec3d rand_in_unit_sphere();
 t_vec3d rand_unit_mm(double min, double max);

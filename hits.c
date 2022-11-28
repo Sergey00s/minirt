@@ -111,19 +111,50 @@ int intersect_triangle3(double orig[3], double dir[3],
    *t = DOT(edge2, qvec) * inv_det;
    (*u) *= inv_det;
    (*v) *= inv_det;
-
-   return 1;
 }
 
-int tocall(t_ray ray, t_tris tris, double *value)
+
+t_vec3d vector3_lerp(t_vec3d a, t_vec3d b, double value)
 {
+    t_vec3d dif;
+
+    dif = vec_plus(b, minus(a));
+    dif = vec_multiply_by_value(dif, value);
+    return (vec_plus(dif, a));
+}
+
+t_vec3d calculate_pos(t_tris tris, double u, double v)
+{
+    t_vec3d b_c;
+    t_vec3d a_b;
+
+    a_b = vector3_lerp(tris.a, tris.b, u);
+    b_c = vector3_lerp(tris.b, tris.c, v);
+    return vec_plus(a_b, vec_plus(b_c, minus(tris.b)));
+}
+
+int tocall(t_ray ray, t_tris tris, double *value, t_vec3d *pos)
+{
+    int result;
     double u;
     double v;
-    
-    return intersect_triangle3((double[]){ray.center.x,ray.center.y,ray.center.z},
-    , (double[]){ray.direction.x,ray.direction.y,ray.direction.z},
-			(double[]){tris.a.x, tris.a.y, tris.a.z},
+
+    tris.a.x -= wn.cam.origin.x;
+    tris.a.y -= wn.cam.origin.y;
+    tris.a.z -= wn.cam.origin.z;
+    tris.b.x -= wn.cam.origin.x;
+    tris.b.y -= wn.cam.origin.y;
+    tris.b.z -= wn.cam.origin.z;
+    tris.c.x -= wn.cam.origin.x;
+    tris.c.y -= wn.cam.origin.y;
+    tris.c.z -= wn.cam.origin.z;
+
+    result = intersect_triangle3((double[]){ray.center.x,ray.center.y,ray.center.z},
+    (double[]){ray.direction.x,ray.direction.y,ray.direction.z},  
+            (double[]){tris.a.x, tris.a.y, tris.a.z},
             (double[]){tris.b.x, tris.b.y, tris.b.z},
             (double[]){tris.c.x, tris.c.y, tris.c.z},
 			value, &u, &v);
+    *pos = calculate_pos(tris, u, v);
+    return result;
 }

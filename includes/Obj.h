@@ -2,6 +2,7 @@
 # define OBJ_H
 
 #include <Vec.h>
+#include <Raytrace.h>
 
 typedef struct  s_plane
 {
@@ -51,6 +52,8 @@ typedef struct  s_obj
     int type;
 }               t_obj;
 
+
 t_obj  *sph(t_vec3d origin, double rad);
 t_obj *pln(t_vec3d origin, t_vec3d normal);
+t_tris tri(t_vec3d a, t_vec3d b, t_vec3d c);
 #endif

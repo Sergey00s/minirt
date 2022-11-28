@@ -145,3 +145,13 @@ t_vec3d	normalize2(t_vec3d vect)
 	length = distance(vec3d(0,0,0), vect);
 	return (vec3d(vect.x / length, vect.y / length, vect.z / length));
 }
+
+t_tris tri(t_vec3d a, t_vec3d b, t_vec3d c)
+{
+	t_tris rtn;
+	
+	rtn.a = a;
+	rtn.b = b;
+	rtn.c = c;
+	return rtn;
+}

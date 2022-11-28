@@ -24,7 +24,7 @@ t_cam s_cam(double vp_h, double focal_len, t_screen screen)
     rtn.focal_len = focal_len;
     rtn.vp_h = vp_h;
     rtn.vp_w = screen.a_ratio * vp_h;
-    rtn.origin = vec3d(0, 0, 0);
+    rtn.origin = vec3d(-1, -1, -3);
     rtn.horizontal = vec3d(rtn.vp_w, 0, 0);
     rtn.vertical = vec3d(0, vp_h, 0);
     rtn.lower_left_corner = lowerleft(rtn);
