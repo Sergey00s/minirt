@@ -48,7 +48,20 @@ int	update(t_list *lst, t_ray r, double min, double max, t_hit *rec)
 	int tris_length = 12;
 	t_tris *tris;
 	t_vec3d tmp_pos;
-	tris = arr();
+	//tris = arr();
+	t_mesh *a = wn.mymesh;
+	tris = a->tris;
+	tris_length = a->size;
+	
+	
+	// for (size_t i = 0; i < tris_length; i++)
+	// {
+	// 	printf("a(%f, %f, %f) b(%f, %f, %f) c(%f, %f, %f)\n"
+	// 		, tris[i].a.x, tris[i].a.y, tris[i].a.z
+	// 		, tris[i].b.x, tris[i].b.y, tris[i].b.z
+	// 		, tris[i].c.x, tris[i].c.y, tris[i].c.z);
+	// }
+	//exit(0);
 	double tmp_t;
 	double tmp_distance;
 

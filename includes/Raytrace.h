@@ -19,6 +19,32 @@ typedef struct s_hit
 	int shader;
 }				t_hit;
 
+typedef struct s_arr
+{
+	char **arr;
+	int size;
+}			t_arr;
+
+
+typedef struct s_objdata
+{
+	t_arr *vecs;
+	t_arr *faces;
+}				t_objdata;
+
+typedef struct s_objmesh
+{
+	t_tris *tris;
+	int size;
+}				t_objmesh;
+
+
+
+t_arr *mk_arr();
+void append(t_arr *self, char *news);
+t_objdata read_my_line(int fd);
+t_objmesh new_mesh(t_objdata data);
+t_mesh *import_obj(char *name, char *obj_name, t_vec3d color);
 int tocall(t_ray ray, t_tris tris, double *value, t_vec3d *pos);
 t_color ray_color(t_ray r, t_list *world, int depth);
 t_vec3d rand_in_unit_sphere();

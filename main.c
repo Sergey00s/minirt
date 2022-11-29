@@ -126,7 +126,7 @@ static void cam_init()
 {
 	wn.cam.origin = vec3d(0, 2, 5);
 	wn.sc.a_ratio = 16.0 / 9.0;
-	wn.sc.width = 800;
+	wn.sc.width = 1080;
 	wn.sc.height = (int)(wn.sc.width / wn.sc.a_ratio);
 	wn.sc.depth = 50;
 	wn.cam = s_cam(2.0, 1.0, wn.sc);
@@ -134,15 +134,14 @@ static void cam_init()
 	printf("height = %d, width = %d\ncam_pos = (%f, %f, %f)\n", wn.sc.height, wn.sc.width, wn.cam.origin.x, wn.cam.origin.y, wn.cam.origin.z);
 }
 
-
-
 int main(void)
 {
 	cam_init();
-	wn.lamp = vec3d(1, 1, 1);
+	wn.lamp = vec3d(10, 0, 0);
 	wn.mlx = mlx_init();
 	wn.win = mlx_new_window(wn.mlx, wn.sc.width, wn.sc.height, "test");
 	wn.world = world_init();
+	wn.mymesh = import_obj("test.obj", "cube", vec3d(0,0, 0));
 	ft_lstadd_back(&wn.world, ft_lstnew(sph(vec3d(0, -100.5, -1), 100)));
 	mlx_key_hook(wn.win, key_hook, NULL);
 	mlx_loop(wn.mlx);

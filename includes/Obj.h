@@ -23,6 +23,7 @@ typedef struct s_mesh
     char *name;
     t_vec3d color;
     t_tris *tris;
+    int size;
 } t_mesh;
 
 typedef struct  s_cyl

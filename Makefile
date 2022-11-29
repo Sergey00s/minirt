@@ -1,5 +1,5 @@
 NAME		= a.out
-CC			= gcc -g
+CC			= gcc
 RM			= rm -rf
 INC			= ./Vectors
 INCTH		= ./Vecimprove

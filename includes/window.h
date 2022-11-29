@@ -13,6 +13,7 @@ typedef struct s_window
 	t_screen sc;
 	t_list	*world;
 	t_cam	cam;
+	t_mesh *mymesh;
 }				t_window;
 
 extern t_window wn;
