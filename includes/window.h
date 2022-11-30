@@ -3,6 +3,14 @@
 
 #include <Cam.h>
 
+typedef struct s_img
+{
+	void	*img;
+	char	*addr;
+	int		bbp;
+	int		line_len;
+	int		endian;
+}	t_img;
 
 typedef struct s_window
 {
@@ -14,7 +22,10 @@ typedef struct s_window
 	t_list	*world;
 	t_cam	cam;
 	t_mesh *mymesh;
+	float	**zBuffer;
+	t_img img;
 }				t_window;
 
+void	image_pixel_put(int x, int y, int color);
 extern t_window wn;
 #endif

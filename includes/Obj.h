@@ -16,6 +16,9 @@ typedef struct s_tris
     t_vec3d a;
     t_vec3d b;
     t_vec3d c;
+    t_vec3d n_a;
+    t_vec3d n_b;
+    t_vec3d n_c;
 } t_tris;
 
 typedef struct s_mesh

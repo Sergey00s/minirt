@@ -114,13 +114,12 @@ int intersect_triangle3(double orig[3], double dir[3],
 }
 
 
-t_vec3d vector3_lerp(t_vec3d a, t_vec3d b, double value)
+t_vec3d vector3_lerp(t_vec3d a, t_vec3d b, double val)
 {
-    t_vec3d dif;
-
-    dif = vec_plus(b, minus(a));
-    dif = vec_multiply_by_value(dif, value);
-    return (vec_plus(dif, a));
+    float val2 = 1 - val;
+    return vec3d(a.x * val + b.x * val2,
+            a.y * val + b.y * val2,
+            a.z * val + b.z * val2);
 }
 
 t_vec3d calculate_pos(t_tris tris, double u, double v)

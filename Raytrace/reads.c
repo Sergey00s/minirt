@@ -60,6 +60,7 @@ t_objdata read_my_line(int fd)
 	char **lines;
 	t_arr *obj;
 	t_arr *face;
+	t_arr *ns;
 	t_objdata rtn;
 	
 	all = alls(fd);
@@ -69,17 +70,20 @@ t_objdata read_my_line(int fd)
 	int j = 0;
 	obj = mk_arr();
 	face = mk_arr();
-
+	ns = mk_arr();
 	while (lines[i])
 	{
 		if (lines[i][0] == 'v' && lines[i][1] == ' ')
 			append(obj, lines[i] + 2);
+		if (lines[i][0] == 'v' && lines[i][1] == 'n' && lines[i][2] == ' ')
+			append(ns, lines[i] + 3);
 		if (lines[i][0] == 'f' && lines[i][1] == ' ')
 			append(face, lines[i] + 2);
 		i++;
 	}
 	rtn.faces = face;
 	rtn.vecs = obj;
+	rtn.nv = ns;
 	return rtn;
 }
 
@@ -99,7 +103,7 @@ long	ft_atol(const char *str)
 	return (rtn * isneg);
 }
 
-double atod(char *str)
+double atod(char *str, int shift)
 {
 	double result;
 	char *right;
@@ -107,10 +111,10 @@ double atod(char *str)
 	right = ft_strchr(str, '.');
 	ft_memmove(right, right + 1, ft_strlen(right));
 	result = ft_atol(str);
-	return result / 1000000;
+	return result / shift;
 }
 
-t_vec3d makevec(char *a)
+t_vec3d makevec(char *a, int shift)
 {
 	char **each;
 	double x;
@@ -119,9 +123,9 @@ t_vec3d makevec(char *a)
 
 	each = ft_split(a, ' ');
 
-	x = atod(each[0]);
-	b = atod(each[1]);
-	c = atod(each[2]);
+	x = atod(each[0], shift);
+	b = atod(each[1], shift);
+	c = atod(each[2], shift);
 	free(each);
 	return vec3d(x, b, c);
 }
@@ -140,11 +144,18 @@ t_objmesh new_mesh(t_objdata data)
 	{
 		temp = ft_split(data.faces->arr[i], ' ');
 		temp2 = ft_split(temp[0], '/');
-		mesh.tris[i].a = makevec((data.vecs->arr)[ft_atoi(temp2[0]) - 1]);
+		mesh.tris[i].a = makevec((data.vecs->arr)[ft_atoi(temp2[0]) - 1], 1000000);
+		mesh.tris[i].n_a = makevec((data.nv->arr)[ft_atoi(temp2[2]) - 1], 10000);
+		free(temp2);
 		temp2 = ft_split(temp[1], '/');
-		mesh.tris[i].b = makevec((data.vecs->arr)[ft_atoi(temp2[0]) - 1]);
+		mesh.tris[i].b = makevec((data.vecs->arr)[ft_atoi(temp2[0]) - 1], 1000000);
+		mesh.tris[i].n_b = makevec((data.nv->arr)[ft_atoi(temp2[2]) - 1], 10000);
+		free(temp2);
 		temp2 = ft_split(temp[2], '/');
-		mesh.tris[i].c = makevec((data.vecs->arr)[ft_atoi(temp2[0]) - 1]);
+		mesh.tris[i].c = makevec((data.vecs->arr)[ft_atoi(temp2[0]) - 1], 1000000);
+		mesh.tris[i].n_c = makevec((data.nv->arr)[ft_atoi(temp2[2]) - 1], 10000);
+		free(temp2);
+		free(temp);
 		i++;
 	}
 	mesh.size =  data.faces->size;

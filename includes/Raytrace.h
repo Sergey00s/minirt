@@ -30,6 +30,7 @@ typedef struct s_objdata
 {
 	t_arr *vecs;
 	t_arr *faces;
+	t_arr *nv;
 }				t_objdata;
 
 typedef struct s_objmesh
@@ -38,8 +39,8 @@ typedef struct s_objmesh
 	int size;
 }				t_objmesh;
 
-
-
+int rgb2(t_vec3d rgb);
+t_vec3d get_normal(t_tris tri);
 t_arr *mk_arr();
 void append(t_arr *self, char *news);
 t_objdata read_my_line(int fd);

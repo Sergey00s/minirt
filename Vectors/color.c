@@ -19,6 +19,17 @@ int rgb1(int r, int g, int b)
   return c;
 }
 
+
+int rgb2(t_vec3d v)
+{
+  int c;
+
+  c = (int)((v.x + 1)* 128);
+  c = (c << 8) | (int)((v.y + 1) * 128);
+  c = (c << 8) | (int)((v.z + 1)* 128);
+  return c;
+}
+
 void write_color(t_color px_color, int samples, int x, int y)
 {
      double r;

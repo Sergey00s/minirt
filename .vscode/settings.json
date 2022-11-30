@@ -5,6 +5,13 @@
 		"vec.h": "c",
 		"cam.h": "c",
 		"obj.h": "c",
-		"window.h": "c"
+		"window.h": "c",
+		"algorithm": "c",
+		"chrono": "c",
+		"limits": "c",
+		"ratio": "c",
+		"__bit_reference": "c",
+		"bitset": "c",
+		"unordered_map": "c"
 	}
 }
