@@ -17,6 +17,7 @@ typedef struct s_window
 	void *mlx;
 	void *win;
 	int samples_per_pixel;
+	t_vec3d lamp_reel_pos;
 	t_vec3d lamp;
 	t_screen sc;
 	t_list	*world;

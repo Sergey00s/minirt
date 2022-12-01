@@ -55,10 +55,6 @@ int hit_sph(t_sph sph, t_ray r, double min, double max, t_hit *rec)
     return 1;
 }
 
-
-
-
-
 int intersect_triangle3(double orig[3], double dir[3],
 			double vert0[3], double vert1[3], double vert2[3],
 			double *t, double *u, double *v)
@@ -113,7 +109,6 @@ int intersect_triangle3(double orig[3], double dir[3],
    (*v) *= inv_det;
 }
 
-
 t_vec3d vector3_lerp(t_vec3d a, t_vec3d b, double val)
 {
     float val2 = 1 - val;
@@ -138,15 +133,9 @@ int tocall(t_ray ray, t_tris tris, double *value, t_vec3d *pos)
     double u;
     double v;
 
-    tris.a.x -= wn.cam.origin.x;
-    tris.a.y -= wn.cam.origin.y;
-    tris.a.z -= wn.cam.origin.z;
-    tris.b.x -= wn.cam.origin.x;
-    tris.b.y -= wn.cam.origin.y;
-    tris.b.z -= wn.cam.origin.z;
-    tris.c.x -= wn.cam.origin.x;
-    tris.c.y -= wn.cam.origin.y;
-    tris.c.z -= wn.cam.origin.z;
+    tris.a = calc_transform(tris.a);
+    tris.b = calc_transform(tris.b);
+    tris.c = calc_transform(tris.c);
 
     result = intersect_triangle3((double[]){ray.center.x,ray.center.y,ray.center.z},
     (double[]){ray.direction.x,ray.direction.y,ray.direction.z},  
@@ -155,5 +144,24 @@ int tocall(t_ray ray, t_tris tris, double *value, t_vec3d *pos)
             (double[]){tris.c.x, tris.c.y, tris.c.z},
 			value, &u, &v);
     *pos = calculate_pos(tris, u, v);
+    return result;
+}
+
+int intersection(t_ray ray, t_tris tris, double *distance)
+{
+    int result;
+    double u;
+    double v;
+
+    tris.a = calc_transform(tris.a);
+    tris.b = calc_transform(tris.b);
+    tris.c = calc_transform(tris.c);
+
+    result = intersect_triangle3((double[]){ray.center.x,ray.center.y,ray.center.z},
+    (double[]){ray.direction.x,ray.direction.y,ray.direction.z},
+            (double[]){tris.a.x, tris.a.y, tris.a.z},
+            (double[]){tris.b.x, tris.b.y, tris.b.z},
+            (double[]){tris.c.x, tris.c.y, tris.c.z},
+			distance, &u, &v);
     return result;
 }

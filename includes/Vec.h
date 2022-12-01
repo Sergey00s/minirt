@@ -37,5 +37,6 @@ double	distance(t_vec3d p1, t_vec3d p2);
 t_vec3d	normalize(t_vec3d vect);
 t_vec3d cross_product(t_vec3d v1, t_vec3d v2);
 t_vec3d vector3_lerp(t_vec3d a, t_vec3d b, double value);
+t_vec3d calc_transform(t_vec3d old);
 
 #endif

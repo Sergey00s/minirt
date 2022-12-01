@@ -39,6 +39,7 @@ typedef struct s_objmesh
 	int size;
 }				t_objmesh;
 
+int intersection(t_ray ray, t_tris tris, double *distance);
 int rgb2(t_vec3d rgb);
 t_vec3d get_normal(t_tris tri);
 t_arr *mk_arr();
