@@ -67,8 +67,8 @@ int	update(t_list *lst, t_ray r, double min, double max, t_hit *rec)
 
 	while(tris_length--)
 	{
-		if (!tocall(r, tris[tris_length], &tmp_t, &tmp_pos))
-			continue;
+		//if (!tocall(r, tris[tris_length], &tmp_t, &tmp_pos))
+		//	continue;
 		tmp_distance = -tmp_t;
 		if (min_distance_sqr > tmp_distance)
 		{

@@ -107,6 +107,7 @@ int intersect_triangle3(double orig[3], double dir[3],
    *t = DOT(edge2, qvec) * inv_det;
    (*u) *= inv_det;
    (*v) *= inv_det;
+   return 1;
 }
 
 t_vec3d vector3_lerp(t_vec3d a, t_vec3d b, double val)

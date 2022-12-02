@@ -137,13 +137,18 @@ int in_shadow(t_vec3d pos)
     //printf("%f , %f , %f\n", pos.x, pos.y, pos.z);
     tris_length = wn.mymesh->size;
     ray.center = wn.lamp;
-    max_distance = lenght(vec_sub(pos, ray.center)) + 0.01;
-    ray.direction = vec3d(0, -1, 0);
+    max_distance = lenght(vec_sub(pos, ray.center)) - 0.01;
+    ray.direction = normalize(vec_sub(pos, ray.center));
+    //printf("%f , %f , %f\n", ray.center.x, ray.center.y, ray.center.z);
+    //printf("%f , %f , %f\n", pos.x, pos.y, pos.z);
+    //printf("%f , %f , %f\n", ray.direction.x, ray.direction.y, ray.direction.z);
+    //printf("\n");
     //ray.direction = vec3d(0,-1,0);
     while(tris_length--)
     {
-        if (intersection(ray, wn.mymesh->tris[tris_length], &distance))
+        if (intersection(ray, wn.mymesh->tris[tris_length], &distance) && distance < max_distance)
         {
+            //printf("oldu\n");
             return 1;
         }
         //printf("%f , %f , %f\n", pos.x, pos.y, pos.z);
@@ -274,7 +279,7 @@ void draw_tris(t_tris tris, int shadow)
                 // printf("- %f , %f , %f\n", tris.c.x, tris.c.y, tris.c.z);
                 // printf("-----------------------------\n");
 
-                if(in_shadow(rPos))
+                if(shadow && in_shadow(rPos))
                     image_pixel_put(x, y, shadow);
                 else
                     image_pixel_put(x, y, rgb2(vec_multiply_by_value(vec3d(1,1,1), dot_product(rNormal, light_dir))));
@@ -315,7 +320,7 @@ void draw_tris(t_tris tris, int shadow)
                 wn.zBuffer[x][y] = rZPos;
                 //image_pixel_put(x, y, rgb2(rNormal));
                 t_vec3d light_dir = normalize(vec_sub(wn.lamp, rPos));
-		        if(in_shadow(rPos))
+		        if(shadow && in_shadow(rPos))
                     image_pixel_put(x, y, shadow);
                 else
                     image_pixel_put(x, y, rgb2(vec_multiply_by_value(vec3d(1,1,1), dot_product(rNormal, light_dir))));
@@ -334,7 +339,7 @@ int ft_render(int shadow)
     for (int i = 0; i < wn.mymesh->size ; i++)
         draw_tris(wn.mymesh->tris[i], shadow);
     mlx_put_image_to_window(wn.mlx, wn.win, wn.img.img, 0, 0);
-	//printf("time: %lf\n", (double)(clock() - begin) / CLOCKS_PER_SEC);
+	printf("time: %lf\n", (double)(clock() - begin) / CLOCKS_PER_SEC);
 	return 1;
 }
 
@@ -344,7 +349,7 @@ int key_hook(int keycode, t_window *vars)
 
 	if (keycode == 15)
 	{
-		
+		ft_render(0x010101);
 	}
 	if (keycode == 53)
 	{
@@ -356,14 +361,13 @@ int key_hook(int keycode, t_window *vars)
 
 int ft_update(void *arg)
 {
-    ft_render(1);
     return 0;
 }
 
 static void cam_init()
 {
 	wn.sc.a_ratio = 16.0 / 9.0;
-	wn.sc.width = 600;
+	wn.sc.width = 800;
 	wn.sc.height = (int)(wn.sc.width / wn.sc.a_ratio);
     wn.zBuffer = (float **)malloc(sizeof(float *) * wn.sc.width);
 
@@ -376,10 +380,10 @@ static void cam_init()
 	//printf("height = %d, width = %d\ncam_pos = (%f, %f, %f)\n", wn.sc.height, wn.sc.width, wn.cam.origin.x, wn.cam.origin.y, wn.cam.origin.z);
 }
 
-int main(void)
+int main()
 {
 	cam_init();
-	wn.lamp_reel_pos = vec3d(0, 3, 0);
+	wn.lamp_reel_pos = vec3d(-1, 5, -6);
 	wn.mlx = mlx_init();
 	wn.win = mlx_new_window(wn.mlx, wn.sc.width, wn.sc.height, "test");
 	wn.world = world_init();
@@ -389,8 +393,8 @@ int main(void)
 	wn.mymesh = import_obj("test.obj", "cube", vec3d(0,0, 0));
 	ft_lstadd_back(&wn.world, ft_lstnew(sph(vec3d(0, -100.5, -1), 100)));
 	mlx_key_hook(wn.win, key_hook, NULL);
-    //mlx_loop_hook(wn.mlx, &ft_update, NULL);
-	ft_render(1241);
+    mlx_loop_hook(wn.mlx, &ft_update, NULL);
+	ft_render(0x010101);
     mlx_loop(wn.mlx);
 	return 0;
 }

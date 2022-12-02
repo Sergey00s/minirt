@@ -1,5 +1,5 @@
 NAME		= a.out
-CC			= gcc -O3
+CC			= clang -O3
 RM			= rm -rf
 INC			= ./Vectors
 INCTH		= ./Vecimprove
@@ -29,12 +29,13 @@ $(LIBFT):
 
 $(MLXLIB):
 	make -C $(MLX)
+	
 
 %.o: %.c
 	$(CC) -I$(INC) -I$(INCS) -I$(INCT) -I$(INCTH) -I$(MLX) -I$(MYINC) -I$(INCLIB) -c $< -o $@
 
 $(NAME): $(OBJS)
-	$(CC) $(OBJS) -I$(INC) -I$(INCS) -I$(INCT) -I$(INCTH) -I$(MYINC) -I$(INCLIB) $(MLX_FLAGS) -o $(NAME) $(LIBFT)
+	$(CC) $(OBJS) -I$(INC) -I$(INCS) -I$(INCT) -I$(INCTH) -I$(MYINC) -I$(INCLIB) $(MLX_FLAGS) -o $(NAME) $(LIBFT) -I$(MLX)
 
 clean: 
 	$(RM) $(OBJS)
